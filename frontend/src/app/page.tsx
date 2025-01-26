@@ -19,7 +19,9 @@ export default function Home() {
     setError("");
 
     try {
-      const response = await axios.post("/api/summarize", { url });
+      // Use the environment variable for the backend API URL
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+      const response = await axios.post(`${backendUrl}/api/summarize`, { url });
       setSummary(response.data.summary);
     } catch (err) {
       setError(err.response?.data?.error || "An error occurred while summarizing the video.");
